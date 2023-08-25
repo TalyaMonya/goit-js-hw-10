@@ -8,6 +8,7 @@ const refs = {
 }
 
 
+
 fetchBreeds()
     .then((data) => {
         refs.select.insertAdjacentHTML('beforeend', createSelect(data))
@@ -16,7 +17,7 @@ fetchBreeds()
     })
     .catch(() => {
         refs.loader.classList.add('is-hidden')
-        refs.select.classList.add('is-hidden')
+        refs.select.classList.remove('is-hidden')
         refs.errorText.classList.remove('is-hidden')
     })
 
@@ -29,6 +30,7 @@ refs.select.addEventListener('change', getIdBreed);
 
 function getIdBreed(evt) {
     refs.container.classList.add('is-hidden')
+    refs.select.classList.remove('is-hidden')
     refs.loader.classList.remove('is-hidden')
     const { value } = evt.target;
     
@@ -37,11 +39,11 @@ function getIdBreed(evt) {
             refs.container.innerHTML = createCatCard(data)
             refs.container.classList.remove('is-hidden')
             refs.loader.classList.add('is-hidden')
+            refs.errorText.classList.add('is-hidden')
         })
         .catch((err) => {
         console.log(err)
             refs.errorText.classList.remove('is-hidden')
-            refs.select.classList.add('is-hidden')
             refs.loader.classList.add('is-hidden')
     })
 }
